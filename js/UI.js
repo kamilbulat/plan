@@ -41,6 +41,8 @@ var UI = {
             
         })
 
+        //commit
+
         $("#baza").on("click",function(){
             $(actual).animate({ left: "-30vw" }, 500)
             $("#bazapanel").animate({ left: "0vw" }, 500)

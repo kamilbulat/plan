@@ -1,0 +1,57 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <script src="libs/jquery-3.1.1.min.js"></script>
+    <script src="js/Settings.js"></script>
+    <script src="js/UI.js"></script>
+    <script src="js/Zegar.js"></script>
+    <script src="js/Main.js"></script>
+    <script src="js/Ajax.js"></script>
+    <script src="js/Database.js"></script>
+    <script>
+        $(document).ready(function () {
+	        UI.init()
+            Zegar.init()
+            Main.init()
+        })
+    </script>
+    <link rel="stylesheet" type="text/css" href="css/style.css"/>
+</head>
+<body>
+    <div id="menu">MENU</div>
+    <div id="zegar"></div>
+    <div class="info" id="teraz">teraz:<br/>Polski - 204</div>
+    <div class="info" id="zachwile">za chwile:<br/>Informatyka - 16W</div>
+    <div class="panel" id="ustawienia">
+        <div class="x">X</div>
+        <ul>
+            <li>godziny</li>
+            <li>kolorystyka</li>
+            <li>ekran startowy</li>
+            <li id="baza">baza danych</li>
+        </ul>
+    </div>
+    <div class="panel" id="dzis">
+        <div class="x">X</div>
+    </div>
+    <div class="panel" id="tydzien">
+        <div class="x">X</div>
+    </div>
+    <div class="panel" id="bazapanel">
+        <div class="x">X</div>
+        <ul>
+            <li class="option">dodaj tabele</li>
+            <li class="option">usun tabele</li>
+            <li class="option">dodaj dane</li>
+            <li class="option">usun dane</li>
+        </ul>
+        
+    </div>
+    <div class="bt" id="bt1">Ustawienia</div>
+    <div class="bt" id="bt2">Dziś</div>
+    <div class="bt" id="bt3">Tydzień</div>
+
+
+</body>
+</html>

@@ -1,0 +1,120 @@
+body{
+    background-color:rgba(0,0,0,0.5);
+    padding: 0;
+    margin: 0;
+    height: 100vh;
+}
+
+@font-face {
+    font-family: Asap;
+    src: url(../fonts/Asap.ttf);
+}
+
+#zegar{
+    width: 100%;
+    text-align: center;
+    font-size: 10vh;
+    padding-top: 10vh;
+    color: white;
+    font-family: 'Asap', 'sans-serif';
+}
+.bt{
+    position: absolute;
+    width: 33vw;
+    border: 1px solid transparent;
+    float: left;
+    text-align: center;
+    height: 8vh;
+    bottom: 0;
+    color: white;
+    font-family: Asap;
+    font-size: 3vw;
+    background-color: rgba(0,0,0,0.5);
+}
+#bt2{
+    margin-left: 33.3vw;
+}
+#bt3{
+    margin-left: 66.6vw;
+}
+.info{
+    text-align: center;
+    height: 10vh;
+    margin-top: 10vh;
+    color: white;
+    font-family: Asap;
+    font-size: 4vh;
+}
+.panel{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 30vw;
+    height: 100vh;
+    background-color: rgb(50,50,50);
+    z-index: 1000;
+    left: -30vw;
+    color: white;
+    font-family: Asap;
+}
+.panel ul li{
+    margin-top: 5%;
+    list-style-type: none;
+    width: 80%;
+    background-color: rgb(100,100,100);
+    padding: 2%;
+}
+.x{
+    position: absolute;
+    right: 1%;
+    font-size: 30px;
+    font-family: Asap;
+}
+#menu{
+    display: none;
+    
+}
+
+@media only screen and (orientation: portrait) {
+     .bt {
+            width: 100vw;
+            left: 0vw;
+            margin-left: 0;
+            position: absolute;
+      }
+      #bt1{
+          margin-left: 0;
+          bottom: -8vh;
+      }
+      #bt2{
+          bottom: -16vh;
+          margin-left: 0;
+      }
+      #bt3{
+          bottom: -24vh;
+          margin-left: 0;
+      }
+      #menu{
+        display: block;
+        position: absolute;
+        font-family: Asap;
+        color: white;
+        font-size: 6vh;
+      }
+}
+
+@media only screen and (orientation: landscape) {
+    .bt{
+        bottom: 0vh;
+        position: absolute;
+    }
+    #bt1{
+        bottom: 0vh;
+    }
+    #bt2{
+        bottom: 0vh;
+    }
+    #bt3{
+        bottom: 0vh;
+    }
+}

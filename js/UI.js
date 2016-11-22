@@ -100,7 +100,18 @@ var UI = {
                                      basealert(response.responseText)
                                  })
                         break;
-
+                    case 4:
+                        var obj = {
+                            action: "download"
+                        }
+                        Database.methods.deleteData(obj)
+                                 .done(function (response) {
+                                     basealert(response)
+                                 })
+                                 .fail(function (response) {
+                                     basealert(response.responseText)
+                                 })
+                        break;
                 }
             })
 

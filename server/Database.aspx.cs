@@ -14,6 +14,8 @@ public partial class server_Default : System.Web.UI.Page
     {
 
         Response.AppendHeader("Access-Control-Allow-Origin", "*");
+
+/**
         try
         {
             conn.Open();
@@ -28,41 +30,129 @@ public partial class server_Default : System.Web.UI.Page
             conn.Close();
             Response.Write("połączenie zamkniete");
         }
+    */
 
         //baza danych
         switch (Request["action"])
         {
             case "create":
-                Response.Write("create");
+                Response.Write("dodawanie tabeli zakonczone ");
                 createTable();
                 break;
-            /*case "drop":
-                Response.Write("drop");
+
+            case "drop":
+                Response.Write("usuwanie tabeli zakonczone ");
                 dropTable();
-                break;*/
+                break;
+
+            case "insert":
+                Response.Write("dodawanie danych do tabeli  zakonczone ");
+                insertData();
+                break;
+            case "delete":
+                Response.Write("usuwanie danych z tabeli zakonczone ");
+                deleteData();
+                break;
         }
 
 
     }
 
-    private void createTable() {
-        Response.AppendHeader("Access-Control-Allow-Origin", "*");
-        conn.Open();
-        string sql = "CREATE TABLE nazwaTabeli (id INTEGER, poleA VARCHAR(10), poleB VARCHAR(20))";
-        SqlCommand command = new SqlCommand();
-        command.CommandText = sql;
-        command.Connection = conn;
-        command.ExecuteNonQuery(); // wykonanie
-        conn.Close();
-    }
-    /*private void dropTable()
+    //tworzenie tabeli
+    private void createTable()
     {
-        conn.Open();
-        string sql = "CREATE TABLE nazwaTabeli (id INTEGER, poleA VARCHAR(10), poleB VARCHAR(20))";
-        SqlCommand command = new SqlCommand();
-        command.CommandText = sql;
-        command.Connection = conn;
-        command.ExecuteNonQuery(); // wykonanie
-        conn.Close();
-    }*/
+        //Response.AppendHeader("Access-Control-Allow-Origin", "*");
+        try
+        {
+            conn.Open();
+            string sql = "CREATE TABLE nazwaTabeli (id INTEGER IDENTITY(1,1), poleA VARCHAR(10), poleB VARCHAR(20))";
+            SqlCommand command = new SqlCommand();
+            command.CommandText = sql;
+            command.Connection = conn;
+            command.ExecuteNonQuery(); // wykonanie
+            Response.Write("powodzeniem");
+        }
+        catch (Exception ex)
+        {
+            Response.Write("niepowodzeniem: " + ex.Message);
+        }
+        finally
+        {
+            conn.Close();
+        }
+    }
+
+    //usuwanie tabeli
+    private void dropTable()
+    {
+        // Response.AppendHeader("Access-Control-Allow-Origin", "*");
+        try
+        {
+            conn.Open();
+            string sql = "DROP TABLE nazwaTabeli";
+            SqlCommand command = new SqlCommand();
+            command.CommandText = sql;
+            command.Connection = conn;
+            command.ExecuteNonQuery(); // wykonanie
+            Response.Write("powodzeniem");
+        }
+        catch (Exception ex)
+        {
+            Response.Write("niepowodzeniem: " + ex.Message);
+        }
+        finally
+        {
+            conn.Close();
+        }
+
+    }
+
+    //dodawanie danych
+    private void insertData()
+    {
+        // Response.AppendHeader("Access-Control-Allow-Origin", "*");
+        try
+        {
+            conn.Open();
+            string sql = "INSERT INTO nazwaTabeli (poleA, poleB) VALUES('a','b')";
+            SqlCommand command = new SqlCommand();
+            command.CommandText = sql;
+            command.Connection = conn;
+            command.ExecuteNonQuery(); // wykonanie
+            Response.Write("powodzeniem");
+        }
+        catch (Exception ex)
+        {
+            Response.Write("niepowodzeniem: " + ex.Message);
+        }
+        finally
+        {
+            conn.Close();
+        }
+
+    }
+
+    //usuwanie danych
+    private void deleteData()
+    {
+        try
+        {
+            conn.Open();
+            string sql = "DELETE FROM nazwaTabeli";
+            SqlCommand command = new SqlCommand();
+            command.CommandText = sql;
+            command.Connection = conn;
+            command.ExecuteNonQuery(); // wykonanie
+            Response.Write("powodzeniem");
+        }
+        catch (Exception ex)
+        {
+            Response.Write("niepowodzeniem: " + ex.Message);
+        }
+        finally
+        {
+            conn.Close();
+        }
+
+    }
 }

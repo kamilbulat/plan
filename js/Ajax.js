@@ -2,7 +2,7 @@
     send: function (obj, url, dataType) {
         return $.ajax({
             type: "POST",
-            url: "http://localhost:52139/server/Database.aspx",
+            url: Settings.urls.databaseUrl,
             data: obj,
             dataType: "text",
         })

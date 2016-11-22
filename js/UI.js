@@ -32,7 +32,7 @@ var UI = {
                 $("#bt2").animate({ bottom: "16vh" }, 500)
                 $("#bt3").animate({ bottom: "8vh" }, 500)
                 stan = !stan
-            } else {
+            }else{
                 $("#bt1").animate({ bottom: "-8vh" }, 500)
                 $("#bt2").animate({ bottom: "-8vh" }, 500)
                 $("#bt3").animate({ bottom: "-8vh" }, 500)
@@ -51,21 +51,71 @@ var UI = {
                 switch ($(this).index()) {
                     case 0:                   
                         var obj = {
-                            action: "create",
+                            action: "create"
                         }
                         Database.methods.createTables(obj)
                          .done(function (response) {
-                             console.log(response)
-                             alert(response)// na razie alert
+                             basealert(response)
                          })
                          .fail(function (response) {
-                             console.log(response.responseText)
-                             alert(response.responseText)
+                             basealert(response.responseText)
                          })
 
-                        break;      
+                        break;
+
+                    case 1:
+                        var obj = {
+                            action: "drop"
+                        }
+                        Database.methods.dropTables(obj)
+                         .done(function (response) {
+                             basealert(response)
+                         })
+                         .fail(function (response) {
+                             basealert(response.responseText)
+                         })
+                        break;
+
+                    case 2:
+                        var obj = {
+                            action: "insert"
+                        }
+                Database.methods.insertData(obj)
+                         .done(function (response) {
+                             basealert(response)
+                         })
+                         .fail(function (response) {
+                             basealert(response.responseText)
+                         })
+                break;
+                    case 3:
+                        var obj = {
+                            action: "delete"
+                        }
+                        Database.methods.deleteData(obj)
+                                 .done(function (response) {
+                                     basealert(response)
+                                 })
+                                 .fail(function (response) {
+                                     basealert(response.responseText)
+                                 })
+                        break;
+
                 }
             })
 
+            function basealert(alert) {
+                $("#basealert").text(alert)
+                $("#basealert").fadeIn(500, function () {
+                    $("#basealert").css("display","block")
+                    $("#basealert").on("click", function () {
+                        $("#basealert").fadeOut(500);
+                    })
+                })
+                
+                
+            }
+
+        //koniec kodu
     }
 }

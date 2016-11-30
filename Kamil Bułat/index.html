@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <title>puzzle</title>
+        
+        
+        <script>
+            window.onload = function() {
+                var tlo = document.createElement("DIV");
+                tlo.setAttribute("id","tlo");
+                document.body.appendChild(tlo);
+                var slider_number = 1;
+                //alert("alert");
+                //strzalka w lewo
+                var strzalka_lewo = document.createElement("IMG");
+                strzalka_lewo.src = "./gfx/arrow.png";
+                strzalka_lewo.style.position = "absolute";
+                strzalka_lewo.setAttribute("id", "lewo");
+                strzalka_lewo.style.left = "calc(50% - 250px)";
+                strzalka_lewo.style.top = "50px";
+                strzalka_lewo.onclick = function() {
+                    if (slider_number < 2) {
+                        for (var i = 1; i < 4; i++) {
+                            var koza = document.getElementById("koza" + i);
+                            var left = parseInt(koza.style.left);
+                            koza.style.left = -200 * (3 - i) + "px";
+                            slider_number = 3;
+                        }
+                    } else {
+                        for (var i = 1; i < 4; i++) {
+                            var koza = document.getElementById("koza" + i);
+                            var left = parseInt(koza.style.left);
+                            koza.style.left = left + 200 + "px";
+                        }
+                        slider_number--;
+                        //console.log(slider_number);
+                    }
+                    graj();
+                }
+                document.body.appendChild(strzalka_lewo);
+
+
+                //strzalka w prawo
+                var strzalka_prawo = document.createElement("IMG");
+                strzalka_prawo.src = "./gfx/arrow.png";
+                strzalka_prawo.style.position = "absolute";
+                strzalka_prawo.setAttribute("id", "prawo");
+                strzalka_prawo.style.transform = "rotate(180deg)";
+                strzalka_prawo.style.left = "calc(50% + 120px)";
+                strzalka_prawo.style.top = "50px";
+                strzalka_prawo.onclick = function() {
+                    if (slider_number > 2) {
+                        for (var i = 1; i < 4; i++) {
+                            
+                            var koza = document.getElementById("koza" + i);
+                            var left = parseInt(koza.style.left);
+                            koza.style.left = (i - 1) * 200 + "px";
+                            slider_number = 1;
+                        }
+                    } else {
+                        for (var i = 1; i < 4; i++) {
+                            var koza = document.getElementById("koza" + i);
+                            var left = parseInt(koza.style.left);
+                            koza.style.left = left - 200 + "px";
+                        }
+                        slider_number++;
+                        //console.log(slider_number);
+                        graj();
+                    }
+
+                }
+                document.body.appendChild(strzalka_prawo);
+
+
+                //tworzenie slidera
+                var obrazek = document.createElement("DIV");
+                obrazek.style.width = "200px";
+                obrazek.style.maxWidth = "600px"
+                obrazek.style.height = "200px";
+                obrazek.style.overflow = "hidden";
+                obrazek.setAttribute("id", "koza");
+                obrazek.className = "koza";
+                document.body.appendChild(obrazek);
+
+
+                //elementy slidera
+                for (var i = 1; i < 4; i++) {
+                    var img = document.createElement("DIV");
+                    img.style.backgroundImage = "url(./gfx/koza" + i + ".jpg)";
+                    img.style.backgroundSize = "100% 100%";
+                    img.style.height = "200px";
+                    img.style.width = "200px";
+                    img.style.left = (i - 1) * 200 + "px";
+                    img.style.float = "left";
+                    img.style.position = "absolute";
+                    img.setAttribute("id", "koza" + i);
+                    img.className = "slider";
+                    obrazek.appendChild(img);
+                }
+                
+                function modul(x){
+                    if(x>=0){
+                        x = x;
+                    }else{
+                        x = -x;
+                    }
+                    return x;
+                }
+
+                //ciecie
+                function cut(x) {
+                    document.getElementById("gra").innerHTML = " ";
+                    var idek = 0;
+                    var szer = 600 / x;
+                    var tab = [];
+                    var nowa = [];
+
+                    //console.log(tab);
+                    //console.log("szer: " + szer);
+                    for (var i = 0; i < x; i++) {
+                        for (var j = 0; j < x; j++) {
+                            var czesc = document.createElement("div");
+                            czesc.setAttribute("id", "e" + idek);
+                            czesc.className = "element";
+                            czesc.style.backgroundImage = "url(./gfx/koza" + slider_number + ".jpg)";
+                            var main_div = document.getElementById("gra");
+                            main_div.appendChild(czesc);
+                            var obecny = document.getElementById("e" + idek);
+                            obecny.style.height = szer + "px";
+                            obecny.style.width = szer + "px";
+                            obecny.style.position = "absolute";
+                            obecny.style.backgroundPositionX = (-1 * j * szer) + "px";
+                            obecny.style.backgroundPositionY = (-1 * i * szer) + "px";
+                            obecny.style.left = (j * szer) + "px";
+                            obecny.style.top = (i * szer) + "px";
+                            //klikanie
+                            obecny.onclick = przesun;
+                            idek++;
+                        }
+                    }
+                    var l = x * x - 1;
+                    var ostatni = document.getElementById("e" + l);
+                    ostatni.style.backgroundImage = "none";
+                    ostatni.value = 0
+                }
+
+                var actual;
+                var ilosc_elementow;
+                var licznik;
+                var il;
+
+                for (var i = 3; i < 7; i++) {
+                    var bt = document.createElement("BUTTON");
+                    bt.id = "bt" + i;
+                    bt.innerHTML = i + " x " + i;
+                    bt.value = i;
+                    bt.className = "przycisk";
+                    bt.onclick = function() {
+                            cut(this.value);
+                            actual = slider_number;
+                            elementy = [];
+                            il = parseInt(this.value);
+                            var p = 0;
+                            for(var j=0;j<this.value*this.value;j++){
+                                elementy.push(p);
+                                p++;
+                            }
+                            ilosc_elementow = this.value * this.value - 1;
+                            //console.log(this.value);   
+                            console.log(elementy);
+                            licznik = 0;
+                        }
+                        //var t = document.createTextNode(i + " x " + i);
+                        //bt.appendChild(t);
+                    document.body.appendChild(bt);
+                }
+                var div = document.createElement("DIV");
+                div.id = "gra";
+                document.body.appendChild(div);
+
+                function przesun() {
+                    klikniety = this.id;
+                    klik = klikniety.substr(1)
+                    console.log(klik)
+                    l = ilosc_elementow;
+                    console.log(l);
+                    var nowy = document.getElementById("e" + l);
+                    nowy.style.backgroundImage = "url(./gfx/koza" + actual + ".jpg)";
+                    nowy.style.backgroundPosition = this.style.backgroundPosition;
+                    nowy.setAttribute("id", klikniety);
+                    this.setAttribute("id", "e" + l);
+                    this.style.backgroundImage = "none";
+                }
+
+                function graj(){
+                    var muzyczka = document.getElementById("muzyka");
+                    muzyczka.play();
+                }
+
+                var music = document.createElement("AUDIO");
+                music.src = "koza.mp3";
+                music.setAttribute("hidden","true");
+                music.setAttribute("autostart","false");
+                music.setAttribute("id","muzyka");
+                document.body.appendChild(music);
+                //code
+                //jakis random commit
+            }
+        </script>
+        <style>
+            .koza{
+                position: absolute;
+                left: calc(50% - 100px);
+            }
+
+            .przycisk{
+                position: relative;
+                width: 50px;
+                margin: 5px;
+                margin-top: 240px;
+            }
+
+            #bt3{
+                margin-left: calc(50% - 115px);  
+            }
+            #gra{
+                width: 600px;
+                height: 600px;
+                border: 1px solid black;
+                margin-top: 10px;
+                margin-left: calc(50% - 300px);
+                position: relative;
+            }
+            .element{
+                background-image: url("./gfx/koza1.jpg");
+                position: absolute;
+            }
+            #zegar{
+                width: 100%;
+                position: absolute;
+                text-align: center;
+                margin-top: 210px;
+            }
+            #tlo{
+                width: 100%;
+                height: 140%;
+                position: absolute;
+                background-image: url("./gfx/tlo.jpg");
+                opacity: 0.75;
+            }
+            body{
+                margin: 0;
+                padding: 0;
+            }
+        </style>
+    </head>
+    <body> 
+    </body>
+</html>
